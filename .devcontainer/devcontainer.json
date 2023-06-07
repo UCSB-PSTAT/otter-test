@@ -1,0 +1,27 @@
+{
+    "name": "Devcontainer Template",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/jovyan/work,type=bind",
+	"workspaceFolder": "/home/jovyan/work",
+
+	"forwardPorts": [8888],
+	"overrideCommand": false,
+
+    "customizations": {
+
+		"vscode": {
+			"settings": {
+				"python.defaultInterpreterPath": "/opt/conda/bin/python"
+			},
+			"extensions": [
+				"github.copilot",
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"ms-toolsai.jupyter-keymap",
+				"analytic-signal.preview-pdf"
+			]
+		}
+	}
+}
