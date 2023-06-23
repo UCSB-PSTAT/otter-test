@@ -1,5 +1,5 @@
 {
-    "name": "Devcontainer Template",
+    "name": "Gradescope-Ottergrader Template",
     "build": {
         "dockerfile": "Dockerfile"
     },

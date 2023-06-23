@@ -1,40 +1,34 @@
-project_name:
+class_name:
     type: str
-    help: What is the name of your project?
+    help: What is the name of your class?
+    default: "PSTAT 123"
 
-dev_language:
+class_term:
     type: str
-    help: What language(s) will you use in this project?
-    choices:
-        R: null
-        Python: null
-        R and Python: null
+    help: What is the term? e.g. Spring 2021
+    default: "Spring 2023"
 
-use_vscode_ext:
-    type: bool
-    help: Do you want to install Visual Studio Code extensions for Jupyter notebooks, {{ dev_language }}?
-    default: yes
+project_slug:
+    type: str
+    help: What is the slug of your project?
+    default: "{% from 'slugify.jinja' import slugify %}{{slugify(class_name)}}-{{slugify(class_term)}}"
 
-use_jupyterlab:
-    type: bool
-    help: Install Jupyter Lab? Jupyter Lab is optional if using VS Code and Python extensions for development.
-    default: no
+github_public_repo:
+    type: str
+    help: What is the name of the public repo? (Student accessible)
+    default: "username/{{project_slug}}"
 
-use_rstudio:
-    type: bool
-    help: Install Rstudio? Rstudio is optional if using VS Code and R extensions for development.
-    default: no
-    when: "{{ 'R' in dev_language }}"
+github_private_repo:
+    type: str
+    help: What is the name of the private repo? (Instructor accessible)
+    default: "{{github_public_repo}}-private"
 
-use_quarto:
-    type: bool
-    help: Install Quarto? Quarto is optional publishing system compatible with {{ dev_language }}.
-    default: no
+dockerhub_username:
+    type: str
+    help: What is your DockerHub username?
 
-include_examples:
-    type: bool
-    help: Do you want to include example files?
-    default: yes
+_tasks:
+    - "bash postGen.sh"
 
 _subdirectory: template
 
