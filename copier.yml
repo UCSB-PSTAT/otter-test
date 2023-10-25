@@ -1,7 +1,7 @@
 class_name:
     type: str
     help: What is the name of your class?
-    default: "PSTAT 123"
+    default: "PSTAT {% import 'macros.jinja' as m -%}{{ m.random_int(5) }}"
 
 class_term:
     type: str
@@ -11,21 +11,22 @@ class_term:
 project_slug:
     type: str
     help: What is the slug of your project?
-    default: "{% from 'slugify.jinja' import slugify %}{{slugify(class_name)}}-{{slugify(class_term)}}"
+    default: "{% import 'macros.jinja' as m -%}{{ m.slugify(class_name) }}-{{ m.slugify(class_term) }}"
 
 github_public_repo:
     type: str
     help: What is the name of the public repo? (Student accessible)
-    default: "username/{{project_slug}}"
+    default: "syoh/{{ project_slug }}"
 
 github_private_repo:
     type: str
     help: What is the name of the private repo? (Instructor accessible)
-    default: "{{github_public_repo}}-private"
+    default: "{{ github_public_repo }}-Private"
 
 dockerhub_username:
     type: str
     help: What is your DockerHub username?
+    default: "syoh"
 
 _tasks:
     - "bash postGen.sh"

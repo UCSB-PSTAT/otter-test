@@ -1,0 +1,9 @@
+{% macro slugify(value) -%}
+{{ value|lower|replace(' ', '-') }}
+{%- endmacro %}
+
+{%- macro random_int(len) -%}
+  {%- for _ in range(len) -%}
+    {{ range(10) | random }}
+  {%- endfor -%}
+{%- endmacro -%}

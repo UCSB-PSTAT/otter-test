@@ -17,7 +17,7 @@
 		"ghcr.io/devcontainers/features/common-utils:2": {}
 	},
 
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace/devcontainer-template,type=bind",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace/otter-test,type=bind",
 	"workspaceFolder": "/workspace",
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
