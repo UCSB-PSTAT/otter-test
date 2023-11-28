@@ -28,6 +28,11 @@ dockerhub_username:
     help: What is your DockerHub username?
     default: "syoh"
 
+dockerhub_repo:
+    type: str
+    help: What is the name of DockerHub repo?
+    default: "{{ dockerhub_username }}/{{ project_slug }}"
+
 _tasks:
     - "bash postGen.sh"
 
