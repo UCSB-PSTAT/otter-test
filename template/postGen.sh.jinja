@@ -41,7 +41,7 @@ git remote add private-repo https://github.com/{{ github_private_repo }}.git
 git remote -v
 
 echo -en "\n## create/push public repository\n"
-echo "# {{ class_name }} ({{ class_term }})" >> README.md
+mv README-public.md README.md 
 git add README.md
 git commit -m "first commit"
 git branch -M public
@@ -77,6 +77,7 @@ gh secret set DOCKER_ACCESS_TOKEN -b"${DOCKERHUB_ACCESS_TOKEN}"
 gh secret set GRADER_ACCESS_TOKEN -b"${GRADER_ACCESS_TOKEN}"
 
 echo -en "\n# pushing grader files to private\n"
+mv README-private.md README.md
 git add .
 git commit -m"initial grader files"
 git push -u private-repo private

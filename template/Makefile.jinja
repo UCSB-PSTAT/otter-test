@@ -47,4 +47,10 @@ repo-structure: ## Create public/private repository pair
 	git branch -u private-repo/private
 	git checkout --orphan public
 	git fetch public-repo
-	git checkout private
+	git checkout Private
+
+GH_VERSION=2.30.0
+GH_URL=https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz
+GH_DIR=/opt/conda/bin
+install-gh: ## place 
+	wget "${GH_URL}" -O - | tar xvzf - -C ${GH_DIR} gh_${GH_VERSION}_linux_amd64/bin/gh --strip-components=2

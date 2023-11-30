@@ -1,0 +1,102 @@
+# Private Repository of {{ class_name }} ({{ class_term }})
+
+- Private repo: https://github.com/{{ github_private_repo }}
+- Public repo: https://github.com/{{ github_public_repo }}
+- Docker repo: https://hub.docker.com/r/{{ dockerhub_repo }}
+- Docker autograder repo: https://hub.docker.com/r/ucsb/gradescope-graders
+
+## Login using GitHub CLI to clone private repository
+
+1. Open Jupyter Lab or Codespaces terminal session.
+1. Download `gh` tool (if you don't have it already):  
+    ```bash
+    GH_VERSION=2.30.0
+    GH_URL=https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz
+    GH_DIR=/opt/conda/bin
+    wget "${GH_URL}" -O - | tar xvzf - -C ${GH_DIR} gh_${GH_VERSION}_linux_amd64/bin/gh --strip-components=2
+    ```
+    or run 
+    ```bash
+    make install-gh
+    ```
+    After this step, `gh` is located in `/opt/conda/bin/gh`.
+1. Login to GitHub:  
+    - In JupyterLab terminal, 
+        ```bash
+        gh auth login
+        ```
+    - In Codespace terminal, existing credential needs to be cleared and set again:
+        ```bash
+        export GITHUB_TOKEN=
+        gh auth login
+        gh auth setup-git
+        ```
+1. Clone the repository
+    ```bash
+    gh repo clone {{ github_private_repo }}
+    ```
+1. Create dual repository structure
+    ```bash
+    make repo-structure
+    ```
+
+## Assignment/lab Editing Procedure
+
+1. [Pull latest material from private repository](#login-using-github-cli-to-clone-private-repository)
+1. If Quarto installed (e.g., on Codespace) Tinytex, remove it:
+    ```bash
+    quarto uninstall tinytex
+    ```
+1. Suppose we will work on `assignments/assignment7/assignment7.ipynb`. The directory formatting must be followed. (For labs, switch `assignment` with `lab`)
+1. Create a new branch named `assignment/7`:  
+    ```bash
+    git checkout -b assignment/7
+    ```
+1. Create/open/edit the assignment notebook using [`otter-grader`](https://otter-grader.readthedocs.io/en/latest/otter_assign/notebook_format.html) format
+1. Generate student template and the "solution"  
+    ```bash
+    cd assignments/assignment7/
+    otter assign assignment7.ipynb .
+    ```
+1. Push all changes to `private-repo` (should be by default):
+    ```bash
+    git add assignments/assignment7
+    git commit -m'assignment 7'
+    git push
+    ```
+1. Go to GitHub actions: e.g., `https://github.com/{{ github_private_repo }}/actions`. Locate the grader image: e.g., something similar to `ucsb/gradescope-graders:Fall2023-as7-b05504e`. Copy this full image name/tag.  
+    ![gradescope-image](images/gradescope-image.png)
+1. Go to the Gradescope page for assignment 7. Then, find "Configure Autograder", choose "Manual Docker configuration", enter into "Dockerhub Image Name" field.  
+    ![gradescope-site-image](images/gradescope-site-image.png)
+1. Run all cells in the assignment solution notebook: i.e., `assignments/assignment7/autograder/assignment7.ipynb`.
+1. Download the output zipfile and submit it to Gradescope.
+
+## Merging to main and releasing assignments/labs to students
+
+1. Follow [repo cloning procedure](#login-using-github-cli-to-clone-private-repository) and [editing procedure](#assignmentlab-editing-procedure)
+1. Suppose lab 9 is to be released. Then the lab notebook is in `labs/lab9` and there should be a branch on Github named `lab/9`.
+1. Create pull request to merge `lab/9` to `private`
+1. Now checkout public branch:
+    ```bash
+    # from top level of repository
+    git checkout public
+    git checkout private labs/lab9/student
+    git commit -m "lab9"
+    git push
+    ```
+
+## Using `grantmcdermott/quarto-revealjs-clean` theme
+
+- Install the theme.
+    ```bash
+    quarto install extension grantmcdermott/quarto-revealjs-clean
+    ```
+- Use this lean template.
+    ```bash
+    quarto use template grantmcdermott/quarto-revealjs-clean
+    ```
+- Use the longer demo template.
+    ```bash
+    quarto use template grantmcdermott/quarto-revealjs-clean-demo
+    ```
+
