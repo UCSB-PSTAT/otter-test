@@ -28,9 +28,9 @@ dockerhub_username:
     help: What is your DockerHub username?
     default: "syoh"
 
-dockerhub_repo:
+jupyterhub_docker_image:
     type: str
-    help: What is the name of DockerHub repo?
+    help: What is the running Docker image tag on the class JupyterHub?
     default: "{{ dockerhub_username }}/{{ project_slug }}"
 
 _tasks:
